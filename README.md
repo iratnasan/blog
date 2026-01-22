@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ✨ Intan Blog
 
-## Getting Started
+> [!NOTE]
+> Sebuah blog modern, estetik, dan performa tinggi yang dibangun dengan **Next.js** dan **Supabase**.
 
-First, run the development server:
+![Banner](https://images.unsplash.com/photo-1499750310159-52f0f913202c?q=80&w=3540&auto=format&fit=crop)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🌟 Fitur Utama
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+*   **⚡ Super Cepat**: Dibangun di atas Next.js 14 (App Router) untuk performa maksimal.
+*   **🎨 Desain Estetik**: UI yang bersih dan modern dengan animasi halus.
+*   **🔐 Aman**: Autentikasi dan otorisasi level database dengan Supabase RLS.
+*   **📝 Editor Kaya Fitur**: Menulis konten dengan mudah menggunakan Tiptap editor.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📚 Dokumentasi
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Kami memiliki dokumentasi lengkap untuk membantu Anda memulai:
 
-## Learn More
+*   **[Panduan Pengembangan (Development)](docs/DEVELOPMENT.md)**: Cara menjalankan proyek di lokal komputer Anda.
+*   **[Panduan CI/CD](docs/CICD_SETUP.md)**: Penjelasan tentang pipeline deployment otomatis kami.
+*   **[Panduan Kontribusi](docs/CONTRIBUTING.md)**: Cara berkontribusi ke proyek ini.
 
-To learn more about Next.js, take a look at the following resources:
+## 🛠️ Teknologi
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Next.js](https://nextjs.org/)
+- [Supabase](https://supabase.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Framer Motion](https://www.framer.com/motion/)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+Dibuat dengan ❤️ oleh [Intan](https://github.com/iratnasan)
