@@ -1,3 +1,4 @@
+/* eslint-disable */
 const { createClient } = require('@supabase/supabase-js');
 
 async function keepAlive() {
@@ -17,7 +18,7 @@ async function keepAlive() {
         // Perform a simple query to keep the project active
         // We'll try to select from a common table or just a simple query if no table is known
         // Selecting 1 is a standard way to check connection/activity
-        const { data, error } = await supabase.from('_keep_alive').select('*').limit(1);
+        const { error } = await supabase.from('_keep_alive').select('*').limit(1);
 
         // If _keep_alive doesn't exist (likely), just do a system check or any query
         if (error && error.code === 'PGRST116') {

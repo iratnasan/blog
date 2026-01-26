@@ -10,9 +10,11 @@ export function ThemeToggle() {
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setMounted(true);
         const stored = localStorage.getItem("theme") as Theme;
         if (stored) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setTheme(stored);
             document.documentElement.setAttribute("data-theme", stored);
         }

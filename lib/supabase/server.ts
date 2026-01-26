@@ -38,7 +38,6 @@ export async function createStaticClient() {
                     return [];
                 },
                 setAll(cookiesToSet) {
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
                     void cookiesToSet;
                     // No-op for static client
                 },
