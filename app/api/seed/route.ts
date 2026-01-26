@@ -92,9 +92,10 @@ export async function GET() {
             inserted: data?.length,
             data,
         });
-    } catch (err: any) {
+    } catch (err) {
+        const error = err as Error;
         return NextResponse.json(
-            { error: "Unexpected error", details: err.message },
+            { error: "Unexpected error", details: error.message },
             { status: 500 }
         );
     }

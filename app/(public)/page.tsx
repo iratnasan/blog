@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { formatDate } from "@/lib/utils";
 import type { Post } from "@/lib/types";
+import Image from "next/image";
 
 export const revalidate = 60; // Revalidate every 60 seconds
 
@@ -63,10 +64,12 @@ export default async function HomePage({
                             <Link href={`/read/${post.slug}`} className="group block">
                                 {post.cover_image && (
                                     <div className="relative w-full h-[300px] mb-6 rounded-lg overflow-hidden bg-muted">
-                                        <img
+                                        <Image
                                             src={post.cover_image}
                                             alt={post.title}
-                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                            fill
+                                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                            sizes="(max-width: 896px) 100vw, 896px"
                                         />
                                     </div>
                                 )}

@@ -54,7 +54,7 @@ export default async function Image({ params }: { params: { slug: string } }) {
                         fontFamily: "sans-serif",
                     }}
                 >
-                    Intan's Journal
+                    Intan&apos;s Journal
                 </div>
 
                 <div

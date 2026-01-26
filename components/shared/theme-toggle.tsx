@@ -7,14 +7,18 @@ type Theme = "light" | "dark" | "sepia";
 
 export function ThemeToggle() {
     const [theme, setTheme] = useState<Theme>("light");
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        setMounted(true);
         const stored = localStorage.getItem("theme") as Theme;
         if (stored) {
             setTheme(stored);
             document.documentElement.setAttribute("data-theme", stored);
         }
     }, []);
+
+    if (!mounted) return null;
 
     const cycleTheme = () => {
         const themes: Theme[] = ["light", "dark", "sepia"];

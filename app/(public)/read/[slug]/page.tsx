@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
-import { createClient, createStaticClient } from "@/lib/supabase/server";
+import { createStaticClient } from "@/lib/supabase/server";
 import { formatDate } from "@/lib/utils";
 import { ReadingProgress } from "@/components/shared/reading-progress";
+import Image from "next/image";
 
 export const revalidate = 60;
 
@@ -53,10 +54,12 @@ export default async function PostPage({
 
                     {post.cover_image && (
                         <div className="relative w-full h-[400px] mb-12 rounded-xl overflow-hidden shadow-sm">
-                            <img
+                            <Image
                                 src={post.cover_image}
                                 alt={post.title}
-                                className="w-full h-full object-cover"
+                                fill
+                                className="object-cover"
+                                priority
                             />
                         </div>
                     )}

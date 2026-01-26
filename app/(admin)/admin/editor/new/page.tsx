@@ -15,20 +15,21 @@ export default function NewPostPage() {
     const [slug, setSlug] = useState("");
     const [excerpt, setExcerpt] = useState("");
     const [content, setContent] = useState("");
-    const [isPublished, setIsPublished] = useState(false);
     const [saving, setSaving] = useState(false);
     const router = useRouter();
 
-    // Auto-generate slug from title
-    useEffect(() => {
-        if (title) {
-            const generatedSlug = title
-                .toLowerCase()
-                .replace(/[^a-z0-9]+/g, "-")
-                .replace(/(^-|-$)/g, "");
-            setSlug(generatedSlug);
-        }
-    }, [title]);
+    const generateSlug = (val: string) => {
+        return val
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/(^-|-$)/g, "");
+    };
+
+    const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newTitle = e.target.value;
+        setTitle(newTitle);
+        setSlug(generateSlug(newTitle));
+    };
 
     const handleSave = async (publish: boolean) => {
         setSaving(true);
@@ -97,7 +98,7 @@ export default function NewPostPage() {
                     <Input
                         id="title"
                         value={title}
-                        onChange={(e) => setTitle(e.target.value)}
+                        onChange={handleTitleChange}
                         placeholder="Enter post title..."
                         className="text-2xl font-serif"
                     />

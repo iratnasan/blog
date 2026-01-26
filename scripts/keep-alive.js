@@ -24,7 +24,7 @@ async function keepAlive() {
             // This is fine, we just need activity
             console.log('Database Ping successful (table might not exist, but connection was made).');
         } else if (error) {
-?      // Try another way if it fails
+            // Try another way if it fails
             const { error: error2 } = await supabase.rpc('get_service_status').limit(1).maybeSingle();
             if (error2) {
                 console.warn('Ping results:', error.message);
