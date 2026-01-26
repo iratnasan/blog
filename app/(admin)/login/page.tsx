@@ -38,7 +38,7 @@ export default function LoginPage() {
             <div className="w-full max-w-md">
                 <div className="text-center mb-8">
                     <h1 className="text-4xl font-serif font-bold mb-2">Admin Login</h1>
-                    <p className="text-[var(--foreground)]/60">
+                    <p className="text-(--foreground)/60">
                         Sign in to manage your journal
                     </p>
                 </div>

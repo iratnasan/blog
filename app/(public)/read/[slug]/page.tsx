@@ -39,7 +39,7 @@ export default async function PostPage({
             <ReadingProgress />
             <article className="max-w-3xl mx-auto px-6 py-12">
                 <header className="mb-12 text-center">
-                    <div className="mb-6 flex items-center justify-center gap-2 text-sm text-[var(--foreground)]/60">
+                    <div className="mb-6 flex items-center justify-center gap-2 text-sm text-(--foreground)/60">
                         <time>
                             {post.published_at && formatDate(post.published_at)}
                         </time>

@@ -40,7 +40,7 @@ export function ThemeToggle() {
     return (
         <button
             onClick={cycleTheme}
-            className="p-2 rounded-lg hover:bg-[var(--muted)] transition-colors"
+            className="p-2 rounded-lg hover:bg-muted transition-colors"
             aria-label="Toggle theme"
         >
             {getIcon()}

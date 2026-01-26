@@ -48,7 +48,7 @@ export default async function HomePage({
                 <h1 className="text-5xl font-serif font-bold mb-4">
                     Welcome to My Journal
                 </h1>
-                <p className="text-lg text-[var(--foreground)]/70">
+                <p className="text-lg text-(--foreground)/70">
                     A space for thoughts, poetry, and reflections
                 </p>
             </header>
@@ -58,11 +58,11 @@ export default async function HomePage({
                     posts.map((post: Post) => (
                         <article
                             key={post.id}
-                            className="border-b border-[var(--muted)] pb-8 last:border-0"
+                            className="border-b border-muted pb-8 last:border-0"
                         >
                             <Link href={`/read/${post.slug}`} className="group block">
                                 {post.cover_image && (
-                                    <div className="relative w-full h-[300px] mb-6 rounded-lg overflow-hidden bg-[var(--muted)]">
+                                    <div className="relative w-full h-[300px] mb-6 rounded-lg overflow-hidden bg-muted">
                                         <img
                                             src={post.cover_image}
                                             alt={post.title}
@@ -70,20 +70,20 @@ export default async function HomePage({
                                         />
                                     </div>
                                 )}
-                                <h2 className="text-3xl font-serif font-semibold mb-3 group-hover:text-[var(--accent)] transition-colors">
+                                <h2 className="text-3xl font-serif font-semibold mb-3 group-hover:text-accent transition-colors">
                                     {post.title}
                                 </h2>
-                                <p className="text-[var(--foreground)]/70 mb-3 line-clamp-3">
+                                <p className="text-(--foreground)/70 mb-3 line-clamp-3">
                                     {post.excerpt}
                                 </p>
-                                <time className="text-sm text-[var(--foreground)]/50">
+                                <time className="text-sm text-(--foreground)/50">
                                     {post.published_at && formatDate(post.published_at)}
                                 </time>
                             </Link>
                         </article>
                     ))
                 ) : (
-                    <div className="text-center py-12 text-[var(--foreground)]/50">
+                    <div className="text-center py-12 text-(--foreground)/50">
                         <p>No posts found on this page.</p>
                     </div>
                 )}
@@ -91,22 +91,22 @@ export default async function HomePage({
 
             {/* Pagination Controls */}
             {(hasPrev || hasNext) && (
-                <div className="flex justify-center gap-4 mt-16 pt-8 border-t border-[var(--muted)]">
+                <div className="flex justify-center gap-4 mt-16 pt-8 border-t border-muted">
                     {hasPrev && (
                         <Link
                             href={`/?page=${page - 1}`}
-                            className="px-4 py-2 border border-[var(--muted)] rounded hover:bg-[var(--muted)]/50 transition-colors text-sm"
+                            className="px-4 py-2 border border-muted rounded hover:bg-(--muted)/50 transition-colors text-sm"
                         >
                             ← Previous
                         </Link>
                     )}
-                    <span className="px-4 py-2 text-sm text-[var(--foreground)]/50">
+                    <span className="px-4 py-2 text-sm text-(--foreground)/50">
                         Page {page} of {totalPages}
                     </span>
                     {hasNext && (
                         <Link
                             href={`/?page=${page + 1}`}
-                            className="px-4 py-2 border border-[var(--muted)] rounded hover:bg-[var(--muted)]/50 transition-colors text-sm"
+                            className="px-4 py-2 border border-muted rounded hover:bg-(--muted)/50 transition-colors text-sm"
                         >
                             Next →
                         </Link>

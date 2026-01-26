@@ -25,10 +25,10 @@ export default async function DashboardPage() {
                 </Link>
             </div>
 
-            <div className="bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-[var(--muted)]">
+            <div className="bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-muted">
                 <div className="overflow-x-auto">
                     <table className="w-full">
-                        <thead className="border-b border-[var(--muted)]">
+                        <thead className="border-b border-muted">
                             <tr>
                                 <th className="text-left p-4 font-semibold">Title</th>
                                 <th className="text-left p-4 font-semibold">Status</th>
@@ -39,24 +39,24 @@ export default async function DashboardPage() {
                         <tbody>
                             {posts && posts.length > 0 ? (
                                 posts.map((post: Post) => (
-                                    <tr key={post.id} className="border-b border-[var(--muted)] last:border-0">
+                                    <tr key={post.id} className="border-b border-muted last:border-0">
                                         <td className="p-4">
                                             <div className="font-medium">{post.title}</div>
-                                            <div className="text-sm text-[var(--foreground)]/60">
+                                            <div className="text-sm text-(--foreground)/60">
                                                 {post.slug}
                                             </div>
                                         </td>
                                         <td className="p-4">
                                             <span
                                                 className={`inline-flex px-2 py-1 text-xs rounded-full ${post.is_published
-                                                        ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
-                                                        : "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-400"
+                                                    ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
+                                                    : "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-400"
                                                     }`}
                                             >
                                                 {post.is_published ? "Published" : "Draft"}
                                             </span>
                                         </td>
-                                        <td className="p-4 text-sm text-[var(--foreground)]/60">
+                                        <td className="p-4 text-sm text-(--foreground)/60">
                                             {formatDate(post.created_at)}
                                         </td>
                                         <td className="p-4">
@@ -75,7 +75,7 @@ export default async function DashboardPage() {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan={4} className="p-8 text-center text-[var(--foreground)]/50">
+                                    <td colSpan={4} className="p-8 text-center text-(--foreground)/50">
                                         No posts yet. Create your first post!
                                     </td>
                                 </tr>

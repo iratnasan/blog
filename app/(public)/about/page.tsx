@@ -6,7 +6,7 @@ export default function AboutPage() {
                     About
                 </h1>
 
-                <div className="space-y-6 text-[var(--foreground)]/80 leading-relaxed">
+                <div className="space-y-6 text-(--foreground)/80 leading-relaxed">
                     <p>
                         Welcome to my personal journal—a quiet corner of the internet where
                         I share my thoughts, poetry, and reflections on life.
