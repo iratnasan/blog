@@ -10,15 +10,23 @@ export function ThemeToggle() {
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         setMounted(true);
-        const stored = localStorage.getItem("theme") as Theme;
-        if (stored) {
-            // eslint-disable-next-line react-hooks/set-state-in-effect
-            setTheme(stored);
-            document.documentElement.setAttribute("data-theme", stored);
-        }
+        const stored = (localStorage.getItem("theme") as Theme) || "light";
+        setTheme(stored);
+        applyTheme(stored);
     }, []);
+
+    const applyTheme = (t: Theme) => {
+        const root = document.documentElement;
+        // Handle Dark Mode Class (Tailwind)
+        if (t === "dark") {
+            root.classList.add("dark");
+        } else {
+            root.classList.remove("dark");
+        }
+        // Handle Data Theme (Sepia, etc)
+        root.setAttribute("data-theme", t);
+    };
 
     if (!mounted) return null;
 
@@ -29,7 +37,7 @@ export function ThemeToggle() {
 
         setTheme(nextTheme);
         localStorage.setItem("theme", nextTheme);
-        document.documentElement.setAttribute("data-theme", nextTheme);
+        applyTheme(nextTheme);
     };
 
     const getIcon = () => {

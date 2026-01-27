@@ -1,90 +1,74 @@
 # 🚀 Panduan Setup Pipeline CI/CD
 
-> [!NOTE]
-> Dokumen ini menjelaskan pipeline *Continuous Integration & Deployment* untuk proyek **Intan Blog**. Dirancang untuk memastikan kualitas kode dan pengiriman yang mulus.
+[![CI/CD](https://img.shields.io/badge/Pipeline-GitHub_Actions-blue?style=for-the-badge&logo=github-actions)](.github/workflows/ci.yml)
+[![Deployment](https://img.shields.io/badge/Deployment-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/)
 
-## 🌟 Ringkasan
-
-Kami menggunakan **GitHub Actions** untuk mengotomatisasi proses pengujian dan build kami. Setiap kali Anda melakukan *push* kode atau membuka *Pull Request*, robot digital kami akan bekerja untuk memverifikasi bahwa semuanya aman terkendali! 🚢
-
-| Fitur | Status | Deskripsi |
-| :--- | :---: | :--- |
-| **Linting** | ✅ | Memeriksa gaya kode dan potensi error menggunakan `eslint`. |
-| **Building** | ✅ | Memastikan aplikasi Next.js dapat di-build tanpa error. |
-| **Platform** | 🐧 | Berjalan di `ubuntu-latest`. |
+Dokumen ini merinci arsitektur *Continuous Integration & Deployment* (CI/CD) **Intan's Journal**. Pipeline ini dirancang untuk menjamin stabilitas kode dan efisiensi pengiriman fitur baru.
 
 ---
 
-## 🛠️ Pipeline (`ci.yml`)
+## 🛠️ Alur Kerja Otomatisasi
 
-Workflow kami berada di `.github/workflows/ci.yml`. Berikut adalah alur kejadiannya:
+Kami menggunakan **GitHub Actions** untuk menjalankan pengujian otomatis pada setiap perubahan kode.
 
 ```mermaid
-graph LR
-    A[Push / PR] --> B[Checkout Code]
-    B --> C[Setup Node.js]
-    C --> D[Install Dependencies]
-    D --> E[Lint Check]
-    E --> F[Build Check]
-    F --> G{Hasil}
-    G -->|Sukses| H[✅ Centang Hijau]
-    G -->|Gagal| I[❌ Silang Merah]
+graph TD
+    A[Push / Pull Request] --> B{Robot GitHub}
+    B --> C[Langkah 1: Setup Environment]
+    C --> D[Langkah 2: Linting Style]
+    D --> E[Langkah 3: Build Verification]
+    E --> F{Status Akhir}
+    F -->|Sukses| G[✅ Siap Deploy]
+    F -->|Gagal| H[❌ Perbaiki Error]
 ```
 
-1.  **Checkout**: Mengambil kode terbaru dari repository.
-2.  **Setup**: Menginstall Node.js (v20) dan mengkonfigurasi caching untuk kecepatan. ⚡
-3.  **Install**: Menjalankan `npm ci` untuk instalasi yang bersih dan deterministik.
-4.  **Lint**: Memastikan kualitas kode via `npm run lint`.
-5.  **Build**: Mengompilasi aplikasi via `npm run build`.
+### Rincian Tahapan (`ci.yml`)
+
+1.  **Environment Setup**: Menggunakan Node.js v20 dengan caching untuk mempercepat instalasi paket.
+2.  **Linting**: Memastikan kode mematuhi standar ESLint proyek.
+3.  **Build Check**: Simulasi proses build Next.js untuk mendeteksi error kompilasi lebih awal.
 
 ---
 
-## 🔐 Mengelola Secrets via CLI
+## 🔐 Manajemen Kredensial (Secrets)
 
-Untuk memastikan proses build memiliki akses ke environment variables yang diperlukan (seperti kunci Supabase), kami menggunakan **GitHub Secrets**.
+Evironment variables sensitif tidak pernah disimpan dalam kode. Kami mengelolanya menggunakan **GitHub Secrets**.
 
 > [!IMPORTANT]
-> **Keamanan Utama!** Jangan pernah commit file `.env` Anda ke repository. Gunakan metode di bawah ini untuk mentransfer environment variables lokal Anda ke GitHub dengan aman.
+> Jangan pernah melakukan commit file `.env.local` Anda. Gunakan GitHub CLI (`gh`) untuk mentransfer secrets dengan aman.
 
-### Prasyarat
+### Cara Mengonfigurasi via CLI
 
-Pastikan Anda telah menginstall GitHub CLI (`gh`) dan sudah login.
-
-```bash
-gh auth login
-```
-
-### ⚡ Perintah Setup Cepat
-
-Jalankan perintah ini di terminal Anda untuk mengatur secrets repository. Ganti nilai placeholder dengan key asli Anda dari `.env.local`.
-
-#### 1. Set Supabase URL
-```bash
-gh secret set NEXT_PUBLIC_SUPABASE_URL --body "url_supabase_anda_disini"
-```
-
-#### 2. Set Supabase Anon Key
-```bash
-gh secret set NEXT_PUBLIC_SUPABASE_ANON_KEY --body "key_anon_supabase_anda_disini"
-```
-
-### 💡 Pro Tip: Import Massal
-Jika Anda memiliki file `.env` yang bersih (tanpa komentar/kekacauan), Anda bisa langsung mengimportnya!
+Pastikan Anda telah login menggunakan `gh auth login`, lalu jalankan:
 
 ```bash
+# 1. Konfigurasi Endpoint Supabase
+gh secret set NEXT_PUBLIC_SUPABASE_URL --body "URL_PROJECT_ANDA"
+
+# 2. Konfigurasi Kunci Publik
+gh secret set NEXT_PUBLIC_SUPABASE_ANON_KEY --body "ANON_KEY_ANDA"
+
+# 3. Import massal (Jika file .env.local sudah rapi)
 gh secret set -f .env.local
 ```
-*(Pastikan Anda mengecek kembali file mana yang Anda kirim!)*
 
 ---
 
-## 🏃‍♂️ Menjalankan Workflow
+## 📅 Jadwal Pemeliharaan (Keep-Alive)
 
-Workflow berjalan otomatis pada:
-- Push ke branch `main`.
-- Pull Request yang menargetkan branch `main`.
+Kami memiliki workflow tambahan `keep-alive.yml` yang berjalan secara terjadwal untuk memastikan database Supabase tidak masuk ke mode *pause* akibat ketidakaktifan.
 
-Anda dapat melihat progresnya di tab **Actions** pada repository GitHub Anda.
+- **Frekuensi**: Sekali seminggu (Senin pukul 00:00 UTC).
+- **Metode**: Melakukan query sederhana ke Supabase via script Node.js.
 
-> [!TIP]
-> Usahakan PR Anda kecil dan sering untuk mendeteksi masalah lebih awal! Happy Coding! ✨
+---
+
+## 🚢 Deployment Production
+
+Setiap perubahan yang berhasil melewati CI pada branch `main` akan dideploy secara otomatis ke **Vercel**. Status build dapat dipantau langsung di pull request atau di dashboard Vercel.
+
+<div align="center">
+
+Happy Shipping! 🚢✨
+
+</div>

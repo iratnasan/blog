@@ -1,63 +1,78 @@
 # 💻 Panduan Pengembangan Lokal
 
-Selamat datang di dapur pengembangan **Intan Blog**! 🍳 Ikuti langkah-langkah ini untuk menjalankan proyek di mesin lokal Anda.
+[![Development](https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge)](docs/DEVELOPMENT.md)
+[![Environment](https://img.shields.io/badge/Environment-Node.js_20+-blue?style=for-the-badge)](https://nodejs.org/)
+
+Selamat datang di dapur pengembangan **Intan's Journal**! 🍳 Ikuti langkah-langkah di bawah ini untuk menyiapkan lingkungan pengembangan di mesin lokal Anda.
+
+---
 
 ## 📋 Prasyarat
 
-Pastikan Anda memiliki tools berikut:
-*   [Node.js](https://nodejs.org/) (v20 atau lebih baru)
-*   [Git](https://git-scm.com/)
-*   [Supabase CLI](https://supabase.com/docs/guides/cli) (Opsional, tapi disarankan)
+Sebelum memulai, pastikan Anda telah menginstal tools berikut:
 
-## ⚙️ Setup Environment
+- **Node.js**: Versi 20 atau yang lebih baru.
+- **Git**: Untuk manajemen versi.
+- **Supabase CLI**: (Opsional) Sangat direkomendasikan untuk manajemen database lokal. [Instalasi CLI](https://supabase.com/docs/guides/cli/getting-started).
 
-1.  **Duplikat file env**:
-    Salin file contoh `.env.local.example` menjadi `.env.local`.
+## ⚙️ Konfigurasi Environment
+
+1.  **Inisialisasi File Env**:
+    Duplikat file contoh `.env.local.example` menjadi `.env.local`.
     ```bash
     cp .env.local.example .env.local
     ```
 
-2.  **Isi Variabel**:
-    Buka `.env.local` dan isi kunci yang diperlukan:
-    *   `NEXT_PUBLIC_SUPABASE_URL`: URL proyek Supabase Anda.
-    *   `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Kunci publik (anon) Supabase Anda.
+2.  **Konfigurasi Variabel**:
+    Buka file `.env.local` dan lengkapi kredensial berikut dari Dashboard Supabase Anda:
+    - `NEXT_PUBLIC_SUPABASE_URL`: API Endpoint proyek Anda.
+    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Kunci publik untuk akses klien.
+    - `SECRET_SUPABASE_KEY`: (Hanya untuk server-side) Kunci layanan admin.
 
 ## 🏃‍♂️ Menjalankan Aplikasi
 
-1.  **Install Paket**:
-    ```bash
-    npm install
-    ```
-
-2.  **Jalankan Server Dev**:
-    ```bash
-    npm run dev
-    ```
-
-3.  **Buka Browser**:
-    Kunjungi [http://localhost:3000](http://localhost:3000).
-
-## 🗄️ Database & Migrations
-
-Jika Anda mengubah skema database:
-
-1.  Buat migrasi baru (jika menggunakan CLI):
-    ```bash
-    supabase migration new nama_perubahan
-    ```
-2.  Edit file SQL yang terbentuk di `supabase/migrations`.
-3.  Apply ke remote (hati-hati untuk production!):
-    ```bash
-    supabase db push
-    ```
-
-## 🧪 Testing
-
-Sebelum commit, pastikan semuanya hijau:
+Ikuti alur standar untuk menjalankan proyek:
 
 ```bash
-npm run lint  # Cek kode style
-npm run build # Cek apakah bisa di-build
+# 1. Instalasi dependensi
+npm install
+
+# 2. Jalankan server pengembangan
+npm run dev
 ```
 
-Happy Hacking! 🚀
+Aplikasi Anda sekarang dapat diakses di [http://localhost:3000](http://localhost:3000) 🚀.
+
+## 🗄️ Manajemen Database
+
+Proyek ini menggunakan migrasi Supabase untuk menjaga konsistensi skema database.
+
+- **Membuat Migrasi Baru**:
+  ```bash
+  supabase migration new deskripsi_perubahan
+  ```
+- **Mendorong Perubahan ke Remote**:
+  ```bash
+  supabase db push
+  ```
+
+> [!CAUTION]
+> Jangan pernah menjalankan perintah `db push --force` pada lingkungan production kecuali jika Anda sangat yakin.
+
+## 🧪 Kontrol Kualitas
+
+Selalu jalankan pemeriksaan ini sebelum melakukan commit untuk menjaga kualitas kode:
+
+| Perintah | Fungsi |
+| :--- | :--- |
+| `npm run lint` | Memeriksa gaya dan potensi error kode (ESLint). |
+| `npm run build` | Memastikan aplikasi dapat dikompilasi dengan sukses. |
+| `npm run type-check` | Memverifikasi konsistensi tipe TypeScript. |
+
+---
+
+<div align="center">
+
+Happy Hacking! ✨
+
+</div>
