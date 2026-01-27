@@ -56,7 +56,7 @@ export default async function HomePage({
 
             <div className="space-y-12">
                 {posts && posts.length > 0 ? (
-                    posts.map((post: Post) => (
+                    posts.map((post: Post, index: number) => (
                         <article
                             key={post.id}
                             className="border-b border-muted pb-8 last:border-0"
@@ -70,24 +70,25 @@ export default async function HomePage({
                                             fill
                                             className="object-cover group-hover:scale-105 transition-transform duration-500"
                                             sizes="(max-width: 896px) 100vw, 896px"
+                                            priority={index === 0}
                                         />
                                     </div>
                                 )}
                                 <h2 className="text-3xl font-serif font-semibold mb-3 group-hover:text-accent transition-colors">
                                     {post.title}
                                 </h2>
-                                <p className="text-(--foreground)/70 mb-3 line-clamp-3">
+                                <p className="text-foreground/80 mb-3 line-clamp-3">
                                     {post.excerpt}
                                 </p>
-                                <time className="text-sm text-(--foreground)/50">
+                                <time className="text-sm text-foreground/60">
                                     {post.published_at && formatDate(post.published_at)}
                                 </time>
                             </Link>
                         </article>
                     ))
                 ) : (
-                    <div className="text-center py-12 text-(--foreground)/50">
-                        <p>No posts found on this page.</p>
+                    <div className="text-center py-20 bg-muted/30 rounded-xl">
+                        <p className="text-foreground/60">No posts found yet.</p>
                     </div>
                 )}
             </div>

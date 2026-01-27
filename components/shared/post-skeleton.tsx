@@ -15,6 +15,9 @@ export function Skeleton({
 export function PostSkeleton() {
     return (
         <div className="space-y-4 py-8 border-b border-muted">
+            {/* Image Placeholder */}
+            <Skeleton className="w-full h-[300px] mb-6 rounded-lg" />
+
             {/* Title */}
             <Skeleton className="h-8 w-3/4" />
 
