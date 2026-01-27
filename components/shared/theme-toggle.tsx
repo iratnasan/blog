@@ -9,13 +9,6 @@ export function ThemeToggle() {
     const [theme, setTheme] = useState<Theme>("light");
     const [mounted, setMounted] = useState(false);
 
-    useEffect(() => {
-        setMounted(true);
-        const stored = (localStorage.getItem("theme") as Theme) || "light";
-        setTheme(stored);
-        applyTheme(stored);
-    }, []);
-
     const applyTheme = (t: Theme) => {
         const root = document.documentElement;
         // Handle Dark Mode Class (Tailwind)
@@ -27,6 +20,13 @@ export function ThemeToggle() {
         // Handle Data Theme (Sepia, etc)
         root.setAttribute("data-theme", t);
     };
+
+    useEffect(() => {
+        setMounted(true);
+        const stored = (localStorage.getItem("theme") as Theme) || "light";
+        setTheme(stored);
+        applyTheme(stored);
+    }, []);
 
     if (!mounted) return null;
 
