@@ -9,12 +9,17 @@ export const size = {
 };
 export const contentType = "image/png";
 
-export default async function Image({ params }: { params: { slug: string } }) {
+export default async function Image({
+    params,
+}: {
+    params: Promise<{ slug: string }>;
+}) {
+    const { slug } = await params;
     const supabase = createClient();
     const { data: post } = await supabase
         .from("posts")
         .select("title, created_at")
-        .eq("slug", params.slug)
+        .eq("slug", slug)
         .single();
 
     const title = post?.title || "Intan's Journal";
