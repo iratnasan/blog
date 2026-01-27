@@ -1,13 +1,24 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: Request) {
+    const { searchParams } = new URL(request.url);
+    const token = searchParams.get("token");
+    const secretToken = process.env.SEED_AUTH_TOKEN;
+
+    if (!secretToken || token !== secretToken) {
+        return NextResponse.json(
+            { error: "Unauthorized: Missing or invalid token" },
+            { status: 401 }
+        );
+    }
+
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseServiceKey = process.env.SECRET_SUPABASE_KEY;
 
     if (!supabaseUrl || !supabaseServiceKey) {
         return NextResponse.json(
-            { error: "Missing Supabase credentials in .env.local" },
+            { error: "Missing Supabase credentials in environment" },
             { status: 500 }
         );
     }
