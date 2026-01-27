@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { createStaticClient } from "@/lib/supabase/server";
 import { formatDate } from "@/lib/utils";
@@ -5,6 +6,43 @@ import { ReadingProgress } from "@/components/shared/reading-progress";
 import Image from "next/image";
 
 export const revalidate = 60;
+
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+    const { slug } = await params;
+    const supabase = await createStaticClient();
+
+    const { data: post } = await supabase
+        .from("posts")
+        .select("title, excerpt")
+        .eq("slug", slug)
+        .eq("is_published", true)
+        .single();
+
+    if (!post) {
+        return {
+            title: "Post Not Found",
+        };
+    }
+
+    return {
+        title: post.title,
+        description: post.excerpt,
+        openGraph: {
+            title: post.title,
+            description: post.excerpt,
+            type: "article",
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: post.title,
+            description: post.excerpt,
+        },
+    };
+}
 
 export async function generateStaticParams() {
     const supabase = await createStaticClient();

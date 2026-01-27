@@ -1,4 +1,4 @@
-Contact: mailto:your-email@example.com
+Contact: mailto:iratnasan@gmail.com
 Expires: 2026-12-31T23:59:59z
 Preferred-Languages: en, id
 Canonical: https://iratnasan.vercel.app/.well-known/security.txt

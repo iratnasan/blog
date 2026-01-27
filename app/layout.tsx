@@ -15,10 +15,26 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Intan's Journal",
+  title: {
+    default: "Intan's Journal",
+    template: "%s | Intan's Journal",
+  },
   description: "A space for thoughts and poetry.",
   authors: [{ name: "Intan Ratna" }],
   generator: "Built with love and logic by R.",
+  openGraph: {
+    title: "Intan's Journal",
+    description: "A space for thoughts and poetry.",
+    url: "https://iratnasan.vercel.app",
+    siteName: "Intan's Journal",
+    locale: "id_ID",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Intan's Journal",
+    description: "A space for thoughts and poetry.",
+  },
 };
 
 export default function RootLayout({
