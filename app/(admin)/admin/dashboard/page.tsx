@@ -2,8 +2,9 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { formatDate } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { PlusCircle, Edit, Trash2 } from "lucide-react";
+import { PlusCircle, Edit, Eye } from "lucide-react";
 import type { Post } from "@/lib/types";
+import { DeletePostButton } from "@/components/admin/delete-post-button";
 
 export default async function DashboardPage() {
     const supabase = await createClient();
@@ -42,7 +43,7 @@ export default async function DashboardPage() {
                                     <tr key={post.id} className="border-b border-muted last:border-0">
                                         <td className="p-4">
                                             <div className="font-medium">{post.title}</div>
-                                            <div className="text-sm text-(--foreground)/60">
+                                            <div className="text-sm text-foreground/60">
                                                 {post.slug}
                                             </div>
                                         </td>
@@ -56,19 +57,22 @@ export default async function DashboardPage() {
                                                 {post.is_published ? "Published" : "Draft"}
                                             </span>
                                         </td>
-                                        <td className="p-4 text-sm text-(--foreground)/60">
+                                        <td className="p-4 text-sm text-foreground/60">
                                             {formatDate(post.created_at)}
                                         </td>
                                         <td className="p-4">
                                             <div className="flex items-center justify-end gap-2">
+                                                <Link href={`/read/${post.slug}`} target="_blank">
+                                                    <Button variant="outline" size="sm">
+                                                        <Eye className="h-4 w-4" />
+                                                    </Button>
+                                                </Link>
                                                 <Link href={`/admin/editor/${post.id}`}>
                                                     <Button variant="outline" size="sm">
                                                         <Edit className="h-4 w-4" />
                                                     </Button>
                                                 </Link>
-                                                <Button variant="outline" size="sm">
-                                                    <Trash2 className="h-4 w-4 text-red-600" />
-                                                </Button>
+                                                <DeletePostButton postId={post.id} postTitle={post.title} />
                                             </div>
                                         </td>
                                     </tr>

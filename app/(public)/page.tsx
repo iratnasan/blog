@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { formatDate } from "@/lib/utils";
 import type { Post } from "@/lib/types";
 import Image from "next/image";
+import { getProfile } from "@/lib/supabase/profile";
 
 export const revalidate = 60; // Revalidate every 60 seconds
 
@@ -24,6 +25,7 @@ export default async function HomePage({
     const to = from + POSTS_PER_PAGE - 1;
 
     const supabase = await createClient();
+    const profile = await getProfile();
 
     // 1. Get Total Count
     const { count } = await supabase
@@ -47,10 +49,10 @@ export default async function HomePage({
         <main className="max-w-4xl mx-auto px-6 py-12">
             <header className="mb-16 text-center">
                 <h1 className="text-5xl font-serif font-bold mb-4">
-                    Welcome to My Journal
+                    {profile?.site_name || "Welcome to My Journal"}
                 </h1>
-                <p className="text-lg text-(--foreground)/70">
-                    A space for thoughts, poetry, and reflections
+                <p className="text-lg text-foreground/70">
+                    {profile?.tagline || "A space for thoughts, poetry, and reflections"}
                 </p>
             </header>
 
@@ -99,18 +101,18 @@ export default async function HomePage({
                     {hasPrev && (
                         <Link
                             href={`/?page=${page - 1}`}
-                            className="px-4 py-2 border border-muted rounded hover:bg-(--muted)/50 transition-colors text-sm"
+                            className="px-4 py-2 border border-muted rounded hover:bg-muted/50 transition-colors text-sm"
                         >
                             ← Previous
                         </Link>
                     )}
-                    <span className="px-4 py-2 text-sm text-(--foreground)/50">
+                    <span className="px-4 py-2 text-sm text-foreground/50">
                         Page {page} of {totalPages}
                     </span>
                     {hasNext && (
                         <Link
                             href={`/?page=${page + 1}`}
-                            className="px-4 py-2 border border-muted rounded hover:bg-(--muted)/50 transition-colors text-sm"
+                            className="px-4 py-2 border border-muted rounded hover:bg-muted/50 transition-colors text-sm"
                         >
                             Next →
                         </Link>

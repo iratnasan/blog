@@ -14,28 +14,36 @@ const inter = Inter({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: "Intan's Journal",
-    template: "%s | Intan's Journal",
-  },
-  description: "A space for thoughts and poetry.",
-  authors: [{ name: "Intan Ratna" }],
-  generator: "Built with love and logic by R.",
-  openGraph: {
-    title: "Intan's Journal",
-    description: "A space for thoughts and poetry.",
-    url: "https://iratnasan.vercel.app",
-    siteName: "Intan's Journal",
-    locale: "id_ID",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Intan's Journal",
-    description: "A space for thoughts and poetry.",
-  },
-};
+import { getProfile } from "@/lib/supabase/profile";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const profile = await getProfile();
+  const siteName = profile?.site_name || "Intan's Journal";
+  const description = profile?.tagline || "A space for thoughts and poetry.";
+
+  return {
+    title: {
+      default: siteName,
+      template: `%s | ${siteName}`,
+    },
+    description,
+    authors: [{ name: profile?.name || "Intan" }],
+    generator: "Built with love and logic by R.",
+    openGraph: {
+      title: siteName,
+      description,
+      url: "https://iratnasan.vercel.app",
+      siteName,
+      locale: "id_ID",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: siteName,
+      description,
+    },
+  };
+}
 
 export default function RootLayout({
   children,

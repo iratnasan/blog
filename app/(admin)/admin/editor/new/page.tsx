@@ -7,15 +7,21 @@ import { TiptapEditor } from "@/components/editor/tiptap-editor";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, Save } from "lucide-react";
+import { ArrowLeft, Save, Image as ImageIcon, Loader2 } from "lucide-react";
 import Link from "next/link";
+import { useRef } from "react";
+import { uploadImage } from "@/lib/supabase/storage";
+import Image from "next/image";
 
 export default function NewPostPage() {
     const [title, setTitle] = useState("");
     const [slug, setSlug] = useState("");
     const [excerpt, setExcerpt] = useState("");
     const [content, setContent] = useState("");
+    const [coverImage, setCoverImage] = useState("");
     const [saving, setSaving] = useState(false);
+    const [uploading, setUploading] = useState(false);
+    const fileInputRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
 
     const generateSlug = (val: string) => {
@@ -47,6 +53,7 @@ export default function NewPostPage() {
             slug,
             excerpt,
             content,
+            cover_image: coverImage,
             is_published: publish,
             published_at: publish ? new Date().toISOString() : null,
             user_id: user.id,
@@ -60,6 +67,21 @@ export default function NewPostPage() {
         } else {
             router.push("/admin/dashboard");
             router.refresh();
+        }
+    };
+
+    const handleCoverUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        setUploading(true);
+        const url = await uploadImage(file);
+        setUploading(false);
+
+        if (url) {
+            setCoverImage(url);
+        } else {
+            alert("Failed to upload image.");
         }
     };
 
@@ -114,6 +136,58 @@ export default function NewPostPage() {
                         onChange={(e) => setSlug(e.target.value)}
                         placeholder="post-url-slug"
                     />
+                </div>
+
+                <div>
+                    <label htmlFor="excerpt" className="block text-sm font-medium mb-2">
+                        Cover Image
+                    </label>
+                    <div className="space-y-4">
+                        <div className="flex gap-2">
+                            <Input
+                                value={coverImage}
+                                onChange={(e) => setCoverImage(e.target.value)}
+                                placeholder="Paste image URL or upload..."
+                            />
+                            <input
+                                type="file"
+                                ref={fileInputRef}
+                                onChange={handleCoverUpload}
+                                className="hidden"
+                                accept="image/*"
+                            />
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={() => fileInputRef.current?.click()}
+                                disabled={uploading}
+                            >
+                                {uploading ? (
+                                    <Loader2 className="h-4 w-4 animate-spin" />
+                                ) : (
+                                    <ImageIcon className="h-4 w-4" />
+                                )}
+                            </Button>
+                        </div>
+                        {coverImage && (
+                            <div className="relative w-full h-[200px] rounded-lg overflow-hidden border border-muted bg-muted/20">
+                                <Image
+                                    src={coverImage}
+                                    alt="Cover preview"
+                                    fill
+                                    className="object-cover"
+                                />
+                                <Button
+                                    variant="destructive"
+                                    size="sm"
+                                    className="absolute top-2 right-2"
+                                    onClick={() => setCoverImage("")}
+                                >
+                                    Remove
+                                </Button>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
                 <div>

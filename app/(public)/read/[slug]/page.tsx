@@ -54,6 +54,8 @@ export async function generateStaticParams() {
     return posts?.map((post) => ({ slug: post.slug })) || [];
 }
 
+import { getProfile } from "@/lib/supabase/profile";
+
 export default async function PostPage({
     params,
 }: {
@@ -61,6 +63,7 @@ export default async function PostPage({
 }) {
     const { slug } = await params;
     const supabase = await createStaticClient();
+    const profile = await getProfile();
 
     const { data: post } = await supabase
         .from("posts")
@@ -105,14 +108,27 @@ export default async function PostPage({
 
                 <div
                     className="prose prose-lg max-w-none
-            prose-headings:font-serif prose-headings:font-semibold
-            prose-p:text-[var(--foreground)] prose-p:leading-relaxed
-            prose-a:text-[var(--accent)] prose-a:no-underline hover:prose-a:underline
-            prose-blockquote:border-l-4 prose-blockquote:border-[var(--accent)]
-            prose-blockquote:pl-6 prose-blockquote:italic
-            prose-img:rounded-lg prose-img:shadow-lg"
+                    prose-headings:font-serif prose-headings:font-semibold
+                    prose-p:text-foreground prose-p:leading-relaxed
+                    prose-a:text-accent prose-a:no-underline hover:prose-a:underline
+                    prose-blockquote:border-l-4 prose-blockquote:border-accent
+                    prose-blockquote:pl-6 prose-blockquote:italic
+                    prose-img:rounded-lg prose-img:shadow-lg mb-20"
                     dangerouslySetInnerHTML={{ __html: post.content }}
                 />
+
+                {profile && (
+                    <footer className="pt-12 border-t border-muted">
+                        <div className="flex items-start gap-6 bg-muted/20 p-8 rounded-2xl border border-muted">
+                            <div className="flex-1">
+                                <h3 className="text-xl font-serif font-bold mb-2">Written by {profile.name}</h3>
+                                <p className="text-foreground/80 leading-relaxed italic">
+                                    "{profile.bio}"
+                                </p>
+                            </div>
+                        </div>
+                    </footer>
+                )}
             </article>
         </>
     );
