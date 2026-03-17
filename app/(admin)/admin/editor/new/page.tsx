@@ -43,35 +43,43 @@ export default function NewPostPage() {
 
     const handleSave = async (publish: boolean) => {
         setSaving(true);
-        const supabase = createClient();
+        try {
+            const supabase = createClient();
 
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) {
-            showToast("You must be logged in to save posts", "error");
+            const { data: { user } } = await supabase.auth.getUser();
+            if (!user) {
+                showToast("You must be logged in to save posts", "error");
+                setSaving(false);
+                return;
+            }
+
+            const postData = {
+                title,
+                slug,
+                excerpt,
+                content,
+                cover_image: coverImage,
+                is_published: publish,
+                published_at: publish ? new Date().toISOString() : null,
+                user_id: user.id,
+            };
+
+            const { error } = await supabase.from("posts").insert([postData]);
+
+            if (error) {
+                showToast(`Error: ${error.message}`, "error");
+                setSaving(false);
+            } else {
+                showToast("Post created successfully!");
+                router.push("/admin/dashboard");
+                router.refresh();
+                // Safety timeout
+                setTimeout(() => setSaving(false), 2000);
+            }
+        } catch (err) {
+            console.error("Save error:", err);
+            showToast("An unexpected error occurred", "error");
             setSaving(false);
-            return;
-        }
-
-        const postData = {
-            title,
-            slug,
-            excerpt,
-            content,
-            cover_image: coverImage,
-            is_published: publish,
-            published_at: publish ? new Date().toISOString() : null,
-            user_id: user.id,
-        };
-
-        const { error } = await supabase.from("posts").insert([postData]);
-
-        if (error) {
-            showToast(`Error: ${error.message}`, "error");
-            setSaving(false);
-        } else {
-            showToast("Post created successfully!");
-            router.push("/admin/dashboard");
-            router.refresh();
         }
     };
 
