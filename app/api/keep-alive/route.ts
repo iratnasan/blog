@@ -19,7 +19,7 @@ export async function GET(request: Request) {
         );
 
         // Simple lightweight query to keep the database active
-        const { data, error } = await supabase
+        const { error } = await supabase
             .from("posts")
             .select("id")
             .limit(1);

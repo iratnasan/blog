@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, createContext, useContext, ReactNode } from "react";
+import { useState, createContext, useContext, ReactNode } from "react";
 import { CheckCircle, XCircle, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 

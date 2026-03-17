@@ -131,7 +131,7 @@ export default async function PostPage({
                             <div className="flex-1">
                                 <h3 className="text-xl font-serif font-bold mb-2">Written by {profile.name}</h3>
                                 <p className="text-foreground/80 leading-relaxed italic">
-                                    "{profile.bio}"
+                                    &ldquo;{profile.bio}&rdquo;
                                 </p>
                             </div>
                         </div>

@@ -22,11 +22,11 @@ export function ThemeToggle() {
     };
 
     useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
+        /* eslint-disable react-hooks/set-state-in-effect -- Intentional: hydration mount & initial theme from localStorage */
         setMounted(true);
         const stored = (localStorage.getItem("theme") as Theme) || "light";
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         setTheme(stored);
+        /* eslint-enable react-hooks/set-state-in-effect */
         applyTheme(stored);
     }, []);
 
