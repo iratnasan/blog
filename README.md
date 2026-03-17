@@ -40,4 +40,4 @@ Semua catatan tentang cara pakai, cara tulis, dan hal teknis lainnya ada di:
 
 ---
 
-Dirangkai dengan logika dan rasa oleh [**rixzkiye**](https://rixzkiye.anartha.com) untuk **Intan Ratna Sari**.
+Dirangkai dengan logika dan rasa oleh [**rizkiye**](https://rizkiye.anartha.com) untuk **Intan Ratna Sari**.

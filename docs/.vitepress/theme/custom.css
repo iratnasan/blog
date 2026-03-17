@@ -1,0 +1,161 @@
+/**
+ * Custom VitePress Theme — Intan's Journal Docs
+ * Catppuccin-inspired color palette with warm, premium feel.
+ */
+
+/* Import Inter from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Brand colors — warm rose/mauve from Catppuccin */
+  --vp-c-brand-1: #e8a2af;
+  --vp-c-brand-2: #f5c2e7;
+  --vp-c-brand-3: #f5e0dc;
+  --vp-c-brand-soft: rgba(232, 162, 175, 0.14);
+
+  /* Typography */
+  --vp-font-family-base: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --vp-font-family-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+}
+
+.dark {
+  --vp-c-brand-1: #f5c2e7;
+  --vp-c-brand-2: #cba6f7;
+  --vp-c-brand-3: #e8a2af;
+  --vp-c-brand-soft: rgba(245, 194, 231, 0.14);
+
+  /* Dark mode bg — Catppuccin Mocha base */
+  --vp-c-bg: #1e1e2e;
+  --vp-c-bg-soft: #24243e;
+  --vp-c-bg-mute: #313244;
+  --vp-c-bg-elv: #24243e;
+}
+
+/* ─── Hero Section Polish ─── */
+.VPHero .name {
+  background: linear-gradient(135deg, #f5c2e7 0%, #cba6f7 50%, #e8a2af 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+.VPHero .text {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.VPHero .tagline {
+  font-size: 1.15rem !important;
+  opacity: 0.85;
+  max-width: 480px;
+}
+
+/* ─── Feature Cards ─── */
+.VPFeature {
+  border-radius: 16px !important;
+  transition: all 0.3s ease !important;
+  border: 1px solid var(--vp-c-bg-soft) !important;
+}
+
+.VPFeature:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  border-color: var(--vp-c-brand-soft) !important;
+}
+
+.dark .VPFeature:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.VPFeature .title {
+  font-weight: 600 !important;
+}
+
+/* ─── Sidebar Polish ─── */
+.VPSidebar .group .title {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  opacity: 0.6;
+}
+
+/* ─── Content Area ─── */
+.vp-doc h1 {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.vp-doc h2 {
+  border-top: none !important;
+  padding-top: 1rem;
+}
+
+.vp-doc a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+/* Tip/Warning/Note blocks */
+.vp-doc .custom-block {
+  border-radius: 12px;
+}
+
+/* ─── Footer ─── */
+.VPFooter {
+  border-top: 1px solid var(--vp-c-bg-soft) !important;
+}
+
+.VPFooter .message {
+  font-style: italic;
+  opacity: 0.8;
+}
+
+/* ─── Smooth scrolling & transitions ─── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ─── Nav bar glass effect ─── */
+.VPNav {
+  backdrop-filter: blur(12px) saturate(150%) !important;
+}
+
+.dark .VPNav {
+  background: rgba(30, 30, 46, 0.85) !important;
+}
+
+/* ─── Code blocks ─── */
+.vp-doc [class*='language-'] {
+  border-radius: 12px !important;
+}
+
+/* ─── Button polish ─── */
+.VPButton.brand {
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  padding: 0.75rem 1.5rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.VPButton.brand:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(232, 162, 175, 0.3);
+}
+
+.VPButton.alt {
+  border-radius: 12px !important;
+}
+
+/* ─── Table polish ─── */
+.vp-doc table {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.vp-doc th {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}

@@ -6,7 +6,7 @@ Proses "terbangnya" kode dari komputermu sampai ke internet dilakukan secara oto
 
 ## 🚢 Vercel (Hosting)
 
-Website utama `iratnasan.vercel.app` di-host di Vercel. 
+Website utama `iratnasan.my.id` di-host di Vercel dengan custom domain. 
 - **Auto-build**: Setiap kali ada perubahan masuk ke branch `main`, Vercel otomatis masak ulang websitenya.
 - **Edge Network**: Tulisanmu disimpan di server terdekat dengan pembaca agar loading-nya cepat.
 

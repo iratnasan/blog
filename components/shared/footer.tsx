@@ -10,7 +10,7 @@ export function Footer({ siteName }: FooterProps) {
                 <p className="text-foreground/50 text-xs">
                     Dirangkai dengan logika dan rasa oleh{" "}
                     <a
-                        href="https://rixzkiye.anartha.com"
+                        href="https://rizkiye.anartha.com"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="underline underline-offset-2 hover:text-foreground/80 transition-colors"
