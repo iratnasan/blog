@@ -12,12 +12,13 @@ export default async function DashboardPage() {
     const { data: posts } = await supabase
         .from("posts")
         .select("*")
+        .is("deleted_at", null)
         .order("created_at", { ascending: false });
 
     return (
         <div className="min-h-screen max-w-6xl mx-auto px-6 py-12">
-            <div className="flex items-center justify-between mb-8">
-                <h1 className="text-4xl font-serif font-bold">Dashboard</h1>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+                <h1 className="text-3xl md:text-4xl font-serif font-bold">Dashboard</h1>
                 <Link href="/admin/editor/new">
                     <Button>
                         <PlusCircle className="mr-2 h-4 w-4" />
@@ -26,7 +27,7 @@ export default async function DashboardPage() {
                 </Link>
             </div>
 
-            <div className="bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-muted">
+            <div className="bg-card rounded-xl shadow-sm border border-muted overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full">
                         <thead className="border-b border-muted">
@@ -79,8 +80,12 @@ export default async function DashboardPage() {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan={4} className="p-8 text-center text-(--foreground)/50">
-                                        No posts yet. Create your first post!
+                                    <td colSpan={4} className="p-12 text-center">
+                                        <div className="flex flex-col items-center gap-3 text-foreground/40">
+                                            <PlusCircle className="h-12 w-12 stroke-[1px]" />
+                                            <p className="text-lg font-medium">No posts yet</p>
+                                            <p className="text-sm">Create your first story to see it here.</p>
+                                        </div>
                                     </td>
                                 </tr>
                             )}

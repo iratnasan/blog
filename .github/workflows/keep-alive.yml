@@ -13,13 +13,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm install @supabase/supabase-js
+        run: pnpm add @supabase/supabase-js
 
       - name: Run keep-alive script
         env:

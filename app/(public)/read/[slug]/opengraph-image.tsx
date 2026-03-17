@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { createClient } from "@/lib/supabase/client";
+import { createStaticClient } from "@/lib/supabase/server";
 
 export const runtime = "edge";
 export const alt = "Blog Post Cover";
@@ -15,7 +15,7 @@ export default async function Image({
     params: Promise<{ slug: string }>;
 }) {
     const { slug } = await params;
-    const supabase = createClient();
+    const supabase = await createStaticClient();
     const { data: post } = await supabase
         .from("posts")
         .select("title, created_at, cover_image")

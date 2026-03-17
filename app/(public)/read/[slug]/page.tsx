@@ -4,6 +4,8 @@ import { createStaticClient } from "@/lib/supabase/server";
 import { formatDate } from "@/lib/utils";
 import { ReadingProgress } from "@/components/shared/reading-progress";
 import Image from "next/image";
+import DOMPurify from "isomorphic-dompurify";
+
 
 export const revalidate = 60;
 
@@ -86,15 +88,21 @@ export default async function PostPage({
                             {post.published_at && formatDate(post.published_at)}
                         </time>
                         <span>•</span>
-                        <span>{Math.ceil((post.content?.length || 0) / 1000)} min read</span>
+                        <span>
+                            {(() => {
+                                const words = post.content?.replace(/<[^>]*>/g, "").split(/\s+/).length || 0;
+                                return Math.ceil(words / 200);
+                            })()}{" "}
+                            min read
+                        </span>
                     </div>
 
-                    <h1 className="text-5xl font-serif font-bold mb-8 leading-tight">
+                    <h1 className="text-3xl md:text-5xl font-serif font-bold mb-8 leading-tight px-4">
                         {post.title}
                     </h1>
 
                     {post.cover_image && (
-                        <div className="relative w-full h-[400px] mb-12 rounded-xl overflow-hidden shadow-sm">
+                        <div className="relative w-full h-[250px] md:h-[400px] mb-12 rounded-xl overflow-hidden shadow-sm">
                             <Image
                                 src={post.cover_image}
                                 alt={post.title}
@@ -114,7 +122,7 @@ export default async function PostPage({
                     prose-blockquote:border-l-4 prose-blockquote:border-accent
                     prose-blockquote:pl-6 prose-blockquote:italic
                     prose-img:rounded-lg prose-img:shadow-lg mb-20"
-                    dangerouslySetInnerHTML={{ __html: post.content }}
+                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content || "") }}
                 />
 
                 {profile && (

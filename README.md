@@ -1,76 +1,43 @@
-<div align="center">
-
 # ✨ Intan's Journal
 
-[![Next.js 15](https://img.shields.io/badge/Next.js-15+-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+> "Di sini, kata-kata menemukan rumahnya."
+
+Selamat datang di sudut kecilku di internet. Jurnal digital ini adalah tempatku menaruh pikiran, sekadar coretan puisi, atau refleksi harian yang melintas begitu saja. Dibuat dengan cinta agar setiap kata punya ruang untuk bernapas.
 
 ---
 
-**Sebuah blog modern, estetik, dan performa tinggi yang dibangun untuk mengekspresikan pikiran, puisi, dan refleksi.**
+## 🌿 Tentang Jurnal Ini
 
-[🌐 Kunjungi Website](https://iratnasan.vercel.app/) • [📝 Panduan Development](docs/DEVELOPMENT.md) • [🚀 Pipeline CI/CD](docs/CICD_SETUP.md)
+Website ini dibangun untuk menjadi tempat yang tenang—tanpa kebisingan media sosial. Fokus utamanya adalah tulisan yang jujur dan tampilan yang minimalis namun tetap elegan.
 
-</div>
+### Fitur yang Menemani:
+- **🎨 Tampilan Personal**: Ada mode **Light**, **Dark**, dan **Sepia** (untuk kenyamanan membaca di malam hari).
+- **📝 Ruang Tulis**: Panel admin khusus untukku merangkai kalimat dengan editor yang nyaman.
+- **✨ Berbagi Cerita**: Secara otomatis membuat gambar preview yang cantik saat link dibagikan.
 
-## 📸 Preview
+## 🛠️ Dibangun Dengan
 
-![Banner](https://images.unsplash.com/photo-1499750310159-52f0f913202c?q=80&w=3540&auto=format&fit=crop)
-*Tampilan bersih dengan tipografi serif yang elegan dan transisi yang halus.*
+Proyek ini menggunakan teknologi modern agar tetap kencang dan aman:
+- **Next.js**: Framework utama yang membuat segalanya terasa instan.
+- **Supabase**: Rumah bagi tulisan (Database) dan penjaga pintu (Auth).
+- **Tailwind**: Untuk kuas warna dan tata letak yang minimalis.
 
-## 🌟 Fitur Unggulan
+## 🏠 Menjalankan di Lokal
 
-- **⚡ Performa Next.js 15/16**: Kecepatan memuat halaman yang luar biasa dengan Server Components dan Static Generation.
-- **🎨 Multi-Theme Support**: Berpindah antara mode **Light**, **Dark**, dan **Sepia** untuk pengalaman membaca yang nyaman.
-- **🖼️ Dynamic OG Images**: Setiap artikel secara otomatis menghasilkan gambar preview media sosial yang cantik dengan judul dan tanggal.
-- **🔐 Keamanan Tingkat Tinggi**: Autentikasi Supabase dengan Row Level Security (RLS) dan headers keamanan yang ketat.
-- **�️ Admin Dashboard**: Kelola konten secara efisien dengan editor kaya fitur (Tiptap/Rich Text).
-- **🤖 WhatsApp Bot Integration**: Terhubung langsung dengan pembaca melalui bot notifikasi.
+Hanya butuh beberapa langkah kalau aku mau mencoba sesuatu di komputer sendiri:
 
-## 🛠️ Stack Teknologi
+1.  **Siapkan Env**:
+    Copy `.env.local.example` menjadi `.env.local` dan masukkan kuncinya.
+2.  **Instalasi**:
+    `pnpm install`
+3.  **Mulai**:
+    `pnpm dev`
 
-- **Frontend**: [Next.js](https://nextjs.org/) (App Router), [Tailwind CSS](https://tailwindcss.com/), [Lucide Icons](https://lucide.dev/)
-- **Backend/Database**: [Supabase](https://supabase.com/) (PostgreSQL, Auth, Storage)
-- **Deployment**: [Vercel](https://vercel.app/), [GitHub Actions](https://github.com/features/actions)
-- **Integrasi**: [Baileys](https://github.com/WhiskeySockets/Baileys) (WA Bot)
+## 📖 Panduan Lengkap
 
-## 🚀 Memulai Cepat
-
-```bash
-# Clone repositori
-git clone https://github.com/iratnasan/my-blog.git
-
-# Masuk ke direktori
-cd my-blog
-
-# Instal dependensi
-npm install
-
-# Jalankan server pengembangan
-npm run dev
-```
-
-> [!TIP]
-> Pastikan Anda telah mengonfigurasi variabel lingkungan di `.env.local` sebelum menjalankan proyek. Lihat [Panduan Development](docs/DEVELOPMENT.md) untuk detailnya.
-
-## � Struktur Proyek
-
-```text
-├── app/              # Next.js App Router (Public, Admin, API)
-├── components/       # UI Components (Shared, Shell, Editors)
-├── lib/              # Utilitas, Supabase Clients, dan Types
-├── public/           # Aset statis dan meta-files
-├── scripts/          # Automatization scripts (Keep-alive)
-└── wa-bot/           # Integrasi WhatsApp Bot
-```
+Semua catatan tentang cara pakai, cara tulis, dan hal teknis lainnya ada di:
+👉 **[Dokumentasi Intan's Journal](https://iratnasan.github.io/blog/)** *(GitHub Pages)*
 
 ---
 
-<div align="center">
-
-Dibuat dengan ❤️ oleh [Intan Ratna](https://github.com/iratnasan)
-
-</div>
+Dirangkai dengan logika dan rasa oleh [**rixzkiye**](https://rixzkiye.anartha.com) untuk **Intan Ratna Sari**.
