@@ -5,7 +5,7 @@ export default withMermaid(
   defineConfig({
     title: "Intan's Journal",
     description: "Panduan lengkap untuk mengelola sudut kecilmu di internet.",
-    base: '/blog/',
+    base: '/',
     ignoreDeadLinks: true,
     head: [
       ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
