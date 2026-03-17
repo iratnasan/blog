@@ -54,12 +54,17 @@ export function ThemeToggle() {
     };
 
     return (
-        <button
-            onClick={cycleTheme}
-            className="p-2 rounded-lg hover:bg-muted transition-colors"
-            aria-label="Toggle theme"
-        >
-            {getIcon()}
-        </button>
+        <div className="flex items-center gap-2">
+            <button
+                onClick={cycleTheme}
+                className="p-2 rounded-lg hover:bg-muted transition-colors flex items-center gap-2 group relative"
+                aria-label={`Current theme: ${theme}. Click to change.`}
+            >
+                {getIcon()}
+                <span className="text-xs font-medium capitalize text-foreground/50 group-hover:text-accent transition-colors">
+                    {theme}
+                </span>
+            </button>
+        </div>
     );
 }

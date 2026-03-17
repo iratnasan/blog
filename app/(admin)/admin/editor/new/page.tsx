@@ -12,6 +12,7 @@ import Link from "next/link";
 import { useRef } from "react";
 import { uploadImage } from "@/lib/supabase/storage";
 import Image from "next/image";
+import { useToast } from "@/components/ui/toast";
 
 export default function NewPostPage() {
     const [title, setTitle] = useState("");
@@ -23,11 +24,14 @@ export default function NewPostPage() {
     const [uploading, setUploading] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
+    const { showToast } = useToast();
 
     const generateSlug = (val: string) => {
         return val
             .toLowerCase()
-            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/ /g, "-")
+            .replace(/[^a-z0-9-]/g, "")
+            .replace(/-+/g, "-")
             .replace(/(^-|-$)/g, "");
     };
 
@@ -43,7 +47,7 @@ export default function NewPostPage() {
 
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) {
-            alert("You must be logged in to save posts");
+            showToast("You must be logged in to save posts", "error");
             setSaving(false);
             return;
         }
@@ -62,9 +66,10 @@ export default function NewPostPage() {
         const { error } = await supabase.from("posts").insert([postData]);
 
         if (error) {
-            alert(`Error: ${error.message}`);
+            showToast(`Error: ${error.message}`, "error");
             setSaving(false);
         } else {
+            showToast("Post created successfully!");
             router.push("/admin/dashboard");
             router.refresh();
         }
@@ -80,13 +85,14 @@ export default function NewPostPage() {
 
         if (url) {
             setCoverImage(url);
+            showToast("Image uploaded successfully!");
         } else {
-            alert("Failed to upload image.");
+            showToast("Failed to upload image.", "error");
         }
     };
 
     return (
-        <div className="min-h-screen max-w-5xl mx-auto px-6 py-12">
+        <div className="min-h-screen max-w-5xl mx-auto px-4 md:px-6 py-12">
             <div className="mb-8 flex items-center justify-between">
                 <Link href="/admin/dashboard">
                     <Button variant="outline">
@@ -133,18 +139,19 @@ export default function NewPostPage() {
                     <Input
                         id="slug"
                         value={slug}
-                        onChange={(e) => setSlug(e.target.value)}
+                        onChange={(e) => setSlug(generateSlug(e.target.value))}
                         placeholder="post-url-slug"
                     />
                 </div>
 
                 <div>
-                    <label htmlFor="excerpt" className="block text-sm font-medium mb-2">
+                    <label htmlFor="cover_image" className="block text-sm font-medium mb-2">
                         Cover Image
                     </label>
                     <div className="space-y-4">
                         <div className="flex gap-2">
                             <Input
+                                id="cover_image"
                                 value={coverImage}
                                 onChange={(e) => setCoverImage(e.target.value)}
                                 placeholder="Paste image URL or upload..."

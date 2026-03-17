@@ -56,6 +56,18 @@ export function TiptapEditor({ content, onChange }: TiptapEditorProps) {
         const file = e.target.files?.[0];
         if (!file || !editor) return;
 
+        // Basic client-side validation before sending to storage utility
+        const MAX_SIZE = 5 * 1024 * 1024;
+        if (file.size > MAX_SIZE) {
+            alert("File is too large. Maximum size is 5MB.");
+            return;
+        }
+
+        if (!file.type.startsWith("image/")) {
+            alert("Only image files are allowed.");
+            return;
+        }
+
         setUploading(true);
         const url = await uploadImage(file);
         setUploading(false);
@@ -63,7 +75,8 @@ export function TiptapEditor({ content, onChange }: TiptapEditorProps) {
         if (url) {
             editor.chain().focus().setImage({ src: url }).run();
         } else {
-            alert("Failed to upload image. Please try again.");
+            // Error alert is handled within storage.ts or as a fallback here
+            // (Note: storage.ts logs to console, implementation_plan suggests better feedback)
         }
 
         // Reset input

@@ -6,6 +6,8 @@ import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Trash2, Loader2 } from "lucide-react";
 
+import { useToast } from "@/components/ui/toast";
+
 interface DeletePostButtonProps {
     postId: string;
     postTitle: string;
@@ -14,6 +16,7 @@ interface DeletePostButtonProps {
 export function DeletePostButton({ postId, postTitle }: DeletePostButtonProps) {
     const [isDeleting, setIsDeleting] = useState(false);
     const router = useRouter();
+    const { showToast } = useToast();
 
     const handleDelete = async () => {
         if (!confirm(`Are you sure you want to delete "${postTitle}"? This action cannot be undone.`)) {
@@ -25,13 +28,14 @@ export function DeletePostButton({ postId, postTitle }: DeletePostButtonProps) {
 
         const { error } = await supabase
             .from("posts")
-            .delete()
+            .update({ deleted_at: new Date().toISOString() })
             .eq("id", postId);
 
         if (error) {
-            alert(`Error: ${error.message}`);
+            showToast(`Error: ${error.message}`, "error");
             setIsDeleting(false);
         } else {
+            showToast("Post deleted successfully!");
             router.refresh();
         }
     };

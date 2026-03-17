@@ -17,6 +17,7 @@ export interface Profile {
     site_name: string | null;
     tagline: string | null;
     bio: string | null;
+    about_content: string | null;
     avatar_url: string | null;
     social_links: Record<string, string>;
     updated_at: string;

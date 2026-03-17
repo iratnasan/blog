@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Save, Loader2, User } from "lucide-react";
 import type { Profile } from "@/lib/types";
+import { useToast } from "@/components/ui/toast";
 
 export default function SettingsPage() {
     const [profile, setProfile] = useState<Partial<Profile>>({
@@ -14,9 +15,11 @@ export default function SettingsPage() {
         site_name: "",
         tagline: "",
         bio: "",
+        about_content: "",
     });
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
+    const { showToast } = useToast();
 
     useEffect(() => {
         const loadProfile = async () => {
@@ -40,6 +43,7 @@ export default function SettingsPage() {
                         site_name: "Intan's Journal",
                         tagline: "A space for thoughts, poetry, and reflections",
                         bio: "Passionate writer and dreamer.",
+                        about_content: "",
                     });
                 }
             }
@@ -65,9 +69,9 @@ export default function SettingsPage() {
             });
 
         if (error) {
-            alert(`Error: ${error.message}`);
+            showToast(`Error: ${error.message}`, "error");
         } else {
-            alert("Settings saved successfully!");
+            showToast("Settings saved successfully!");
         }
         setSaving(false);
     };
@@ -98,7 +102,7 @@ export default function SettingsPage() {
             </div>
 
             <div className="grid gap-8">
-                <section className="bg-white dark:bg-gray-900 p-8 rounded-xl border border-muted shadow-sm space-y-6">
+                <section className="bg-card p-8 rounded-xl border border-muted shadow-sm space-y-6">
                     <h2 className="text-xl font-serif font-semibold border-b border-muted pb-4">Branding</h2>
 
                     <div className="grid gap-4 md:grid-cols-2">
@@ -130,7 +134,7 @@ export default function SettingsPage() {
                     </div>
                 </section>
 
-                <section className="bg-white dark:bg-gray-900 p-8 rounded-xl border border-muted shadow-sm space-y-6">
+                <section className="bg-card p-8 rounded-xl border border-muted shadow-sm space-y-6">
                     <h2 className="text-xl font-serif font-semibold border-b border-muted pb-4">Author Profile</h2>
 
                     <div className="space-y-2">
@@ -141,6 +145,19 @@ export default function SettingsPage() {
                             placeholder="Tell the world about yourself..."
                             rows={4}
                         />
+                    </div>
+
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium">About Page Content</label>
+                        <Textarea
+                            value={profile.about_content || ""}
+                            onChange={(e) => setProfile({ ...profile, about_content: e.target.value })}
+                            placeholder="Write the full 'About Me' content here..."
+                            rows={10}
+                        />
+                        <p className="text-xs text-muted-foreground italic">
+                            This content will be displayed on the public /about page. Supports plain text/paragraphs.
+                        </p>
                     </div>
 
                     {/* Future: Avatar Upload and Social Links */}

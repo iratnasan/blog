@@ -45,6 +45,8 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+import { ToastProvider } from "@/components/ui/toast";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -55,7 +57,9 @@ export default function RootLayout({
       <body
         className={`${playfair.variable} ${inter.variable} antialiased`}
       >
-        {children}
+        <ToastProvider>
+          {children}
+        </ToastProvider>
       </body>
     </html>
   );

@@ -12,6 +12,7 @@ import Link from "next/link";
 import { use, useRef } from "react";
 import { uploadImage } from "@/lib/supabase/storage";
 import Image from "next/image";
+import { useToast } from "@/components/ui/toast";
 
 export default function EditPostPage({
     params,
@@ -30,6 +31,16 @@ export default function EditPostPage({
     const [loading, setLoading] = useState(true);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
+    const { showToast } = useToast();
+
+    const generateSlug = (val: string) => {
+        return val
+            .toLowerCase()
+            .replace(/ /g, "-")
+            .replace(/[^a-z0-9-]/g, "")
+            .replace(/-+/g, "-")
+            .replace(/(^-|-$)/g, "");
+    };
 
     useEffect(() => {
         const loadPost = async () => {
@@ -74,9 +85,10 @@ export default function EditPostPage({
             .eq("id", id);
 
         if (error) {
-            alert(`Error: ${error.message}`);
+            showToast(`Error: ${error.message}`, "error");
             setSaving(false);
         } else {
+            showToast("Post updated successfully!");
             router.push("/admin/dashboard");
             router.refresh();
         }
@@ -92,8 +104,9 @@ export default function EditPostPage({
 
         if (url) {
             setCoverImage(url);
+            showToast("Image uploaded successfully!");
         } else {
-            alert("Failed to upload image.");
+            showToast("Failed to upload image.", "error");
         }
     };
 
@@ -106,7 +119,7 @@ export default function EditPostPage({
     }
 
     return (
-        <div className="min-h-screen max-w-5xl mx-auto px-6 py-12">
+        <div className="min-h-screen max-w-5xl mx-auto px-4 md:px-6 py-12">
             <div className="mb-8 flex items-center justify-between">
                 <Link href="/admin/dashboard">
                     <Button variant="outline">
@@ -140,7 +153,13 @@ export default function EditPostPage({
                     <Input
                         id="title"
                         value={title}
-                        onChange={(e) => setTitle(e.target.value)}
+                        onChange={(e) => {
+                            const newTitle = e.target.value;
+                            setTitle(newTitle);
+                            // Only auto-generate slug if it's currently empty or strictly matches the old title
+                            // but for simplicity in blog, we often just want a manual edit or a copy button.
+                            // Here we just fix the manual input below.
+                        }}
                         placeholder="Enter post title..."
                         className="text-2xl font-serif"
                     />
@@ -153,18 +172,19 @@ export default function EditPostPage({
                     <Input
                         id="slug"
                         value={slug}
-                        onChange={(e) => setSlug(e.target.value)}
+                        onChange={(e) => setSlug(generateSlug(e.target.value))}
                         placeholder="post-url-slug"
                     />
                 </div>
 
                 <div>
-                    <label htmlFor="excerpt" className="block text-sm font-medium mb-2">
+                    <label htmlFor="cover_image" className="block text-sm font-medium mb-2">
                         Cover Image
                     </label>
                     <div className="space-y-4">
                         <div className="flex gap-2">
                             <Input
+                                id="cover_image"
                                 value={coverImage}
                                 onChange={(e) => setCoverImage(e.target.value)}
                                 placeholder="Paste image URL or upload..."

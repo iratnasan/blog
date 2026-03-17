@@ -1,9 +1,17 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request) {
-    const { searchParams } = new URL(request.url);
-    const token = searchParams.get("token");
+export async function POST(request: Request) {
+    // 0. Production guard
+    if (process.env.NODE_ENV === "production") {
+        return NextResponse.json(
+            { error: "Seed API is disabled in production" },
+            { status: 403 }
+        );
+    }
+
+    const authHeader = request.headers.get("Authorization");
+    const token = authHeader?.startsWith("Bearer ") ? authHeader.substring(7) : null;
     const secretToken = process.env.SEED_AUTH_TOKEN;
 
     if (!secretToken || token !== secretToken) {

@@ -4,6 +4,7 @@ import { formatDate } from "@/lib/utils";
 import type { Post } from "@/lib/types";
 import Image from "next/image";
 import { getProfile } from "@/lib/supabase/profile";
+import { AnimatedPostList } from "@/components/shared/animated-post-list";
 
 export const revalidate = 60; // Revalidate every 60 seconds
 
@@ -47,47 +48,49 @@ export default async function HomePage({
 
     return (
         <main className="max-w-4xl mx-auto px-6 py-12">
-            <header className="mb-16 text-center">
-                <h1 className="text-5xl font-serif font-bold mb-4">
+            <header className="mb-12 md:mb-16 text-center">
+                <h1 className="text-3xl md:text-5xl font-serif font-bold mb-4 px-4">
                     {profile?.site_name || "Welcome to My Journal"}
                 </h1>
-                <p className="text-lg text-foreground/70">
+                <p className="text-base md:text-lg text-foreground/70 px-6">
                     {profile?.tagline || "A space for thoughts, poetry, and reflections"}
                 </p>
             </header>
 
             <div className="space-y-12">
                 {posts && posts.length > 0 ? (
-                    posts.map((post: Post, index: number) => (
-                        <article
-                            key={post.id}
-                            className="border-b border-muted pb-8 last:border-0"
-                        >
-                            <Link href={`/read/${post.slug}`} className="group block">
-                                {post.cover_image && (
-                                    <div className="relative w-full h-[300px] mb-6 rounded-lg overflow-hidden bg-muted">
-                                        <Image
-                                            src={post.cover_image}
-                                            alt={post.title}
-                                            fill
-                                            className="object-cover group-hover:scale-105 transition-transform duration-500"
-                                            sizes="(max-width: 896px) 100vw, 896px"
-                                            priority={index === 0}
-                                        />
-                                    </div>
-                                )}
-                                <h2 className="text-3xl font-serif font-semibold mb-3 group-hover:text-accent transition-colors">
-                                    {post.title}
-                                </h2>
-                                <p className="text-foreground/80 mb-3 line-clamp-3">
-                                    {post.excerpt}
-                                </p>
-                                <time className="text-sm text-foreground/60">
-                                    {post.published_at && formatDate(post.published_at)}
-                                </time>
-                            </Link>
-                        </article>
-                    ))
+                    <AnimatedPostList>
+                        {posts.map((post: Post, index: number) => (
+                            <article
+                                key={post.id}
+                                className="border-b border-muted pb-8 last:border-0"
+                            >
+                                <Link href={`/read/${post.slug}`} className="group block">
+                                    {post.cover_image && (
+                                        <div className="relative w-full h-[200px] md:h-[300px] mb-6 rounded-lg overflow-hidden bg-muted">
+                                            <Image
+                                                src={post.cover_image}
+                                                alt={post.title}
+                                                fill
+                                                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                                sizes="(max-width: 896px) 100vw, 896px"
+                                                priority={index === 0}
+                                            />
+                                        </div>
+                                    )}
+                                    <h2 className="text-2xl md:text-3xl font-serif font-semibold mb-3 group-hover:text-accent transition-colors">
+                                        {post.title}
+                                    </h2>
+                                    <p className="text-foreground/80 mb-3 line-clamp-3">
+                                        {post.excerpt}
+                                    </p>
+                                    <time className="text-sm text-foreground/60">
+                                        {post.published_at && formatDate(post.published_at)}
+                                    </time>
+                                </Link>
+                            </article>
+                        ))}
+                    </AnimatedPostList>
                 ) : (
                     <div className="text-center py-20 bg-muted/30 rounded-xl">
                         <p className="text-foreground/60">No posts found yet.</p>

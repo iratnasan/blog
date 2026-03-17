@@ -14,7 +14,7 @@
   --popover: #ffffff;
   --popover-foreground: #2d2d2d;
   
-  /* Accent: Muted Gold/Brown */
+  /* Accent: Muted Gold/Brown - Increased contrast for visibility */
   --primary: #8b7355; 
   --primary-foreground: #faf8f5;
   
@@ -24,8 +24,8 @@
   --muted: #e8e4df;
   --muted-foreground: #6b6b6b;
   
-  --accent: #e8e4df;
-  --accent-foreground: #2d2d2d;
+  --accent: #8b7355; 
+  --accent-foreground: #faf8f5;
   
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
@@ -178,4 +178,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--muted-foreground);
+}
+/* Accessibility: Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
