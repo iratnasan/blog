@@ -7,7 +7,7 @@ hero:
   tagline: "Panduan lengkap untuk mengelola sudut kecilmu di internet."
   image:
     src: /hero-illustration.svg
-    alt: Intan's Journal
+    alt: Ilustrasi Jurnal
   actions:
     - theme: brand
       text: 🚀 Mulai Pelajari

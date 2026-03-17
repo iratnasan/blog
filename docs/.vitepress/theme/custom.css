@@ -131,11 +131,14 @@ html {
 }
 
 /* ─── Button polish ─── */
-.VPButton.brand {
+.VPButton.brand,
+.VPButton.alt {
   border-radius: 12px !important;
   font-weight: 600 !important;
-  padding: 0.75rem 1.5rem !important;
+  padding: 0.75rem 1.75rem !important;
   transition: all 0.2s ease !important;
+  min-width: 180px;
+  text-align: center;
 }
 
 .VPButton.brand:hover {
@@ -143,8 +146,8 @@ html {
   box-shadow: 0 4px 20px rgba(232, 162, 175, 0.3);
 }
 
-.VPButton.alt {
-  border-radius: 12px !important;
+.VPButton.alt:hover {
+  transform: translateY(-1px);
 }
 
 /* ─── Table polish ─── */
