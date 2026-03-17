@@ -24,19 +24,32 @@ export function DeletePostButton({ postId, postTitle }: DeletePostButtonProps) {
         }
 
         setIsDeleting(true);
-        const supabase = createClient();
+        try {
+            const supabase = createClient();
 
-        const { error } = await supabase
-            .from("posts")
-            .update({ deleted_at: new Date().toISOString() })
-            .eq("id", postId);
+            const { error, data } = await supabase
+                .from("posts")
+                .update({ deleted_at: new Date().toISOString() })
+                .eq("id", postId)
+                .select("id");
 
-        if (error) {
-            showToast(`Error: ${error.message}`, "error");
+            if (error) {
+                showToast(`Error: ${error.message}`, "error");
+                setIsDeleting(false);
+            } else if (!data || data.length === 0) {
+                showToast("Failed to delete: you may not have permission", "error");
+                setIsDeleting(false);
+            } else {
+                showToast("Post deleted successfully!");
+                setTimeout(() => {
+                    router.refresh();
+                    setIsDeleting(false);
+                }, 500);
+            }
+        } catch (err) {
+            console.error("Delete error:", err);
+            showToast("An unexpected error occurred", "error");
             setIsDeleting(false);
-        } else {
-            showToast("Post deleted successfully!");
-            router.refresh();
         }
     };
 

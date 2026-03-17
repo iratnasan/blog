@@ -55,23 +55,32 @@ export default function SettingsPage() {
 
     const handleSave = async () => {
         setSaving(true);
-        const supabase = createClient();
-        const { data: { user } } = await supabase.auth.getUser();
+        try {
+            const supabase = createClient();
+            const { data: { user } } = await supabase.auth.getUser();
 
-        if (!user) return;
+            if (!user) {
+                showToast("You must be logged in to save settings", "error");
+                setSaving(false);
+                return;
+            }
 
-        const { error } = await supabase
-            .from("profiles")
-            .upsert({
-                id: user.id,
-                ...profile,
-                updated_at: new Date().toISOString(),
-            });
+            const { error } = await supabase
+                .from("profiles")
+                .upsert({
+                    id: user.id,
+                    ...profile,
+                    updated_at: new Date().toISOString(),
+                });
 
-        if (error) {
-            showToast(`Error: ${error.message}`, "error");
-        } else {
-            showToast("Settings saved successfully!");
+            if (error) {
+                showToast(`Error: ${error.message}`, "error");
+            } else {
+                showToast("Settings saved successfully!");
+            }
+        } catch (err) {
+            console.error("Settings error:", err);
+            showToast("An unexpected error occurred", "error");
         }
         setSaving(false);
     };

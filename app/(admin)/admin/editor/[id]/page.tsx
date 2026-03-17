@@ -67,30 +67,41 @@ export default function EditPostPage({
 
     const handleSave = async (publish: boolean) => {
         setSaving(true);
-        const supabase = createClient();
+        try {
+            const supabase = createClient();
 
-        const postData = {
-            title,
-            slug,
-            excerpt,
-            content,
-            cover_image: coverImage,
-            is_published: publish,
-            published_at: publish && !isPublished ? new Date().toISOString() : undefined,
-        };
+            const postData = {
+                title,
+                slug,
+                excerpt,
+                content,
+                cover_image: coverImage,
+                is_published: publish,
+                published_at: publish && !isPublished ? new Date().toISOString() : undefined,
+            };
 
-        const { error } = await supabase
-            .from("posts")
-            .update(postData)
-            .eq("id", id);
+            const { error } = await supabase
+                .from("posts")
+                .update(postData)
+                .eq("id", id);
 
-        if (error) {
-            showToast(`Error: ${error.message}`, "error");
+            if (error) {
+                showToast(`Error: ${error.message}`, "error");
+                setSaving(false);
+            } else {
+                showToast("Post updated successfully!");
+                router.push("/admin/dashboard");
+                router.refresh();
+                // We keep saving true during redirect to avoid double clicks, 
+                // but technically if the redirect is slow, it might be better to reset.
+                // However, in success branch we usually want to prevent further edits.
+                // Added a safety timeout just in case redirect fails.
+                setTimeout(() => setSaving(false), 2000);
+            }
+        } catch (err) {
+            console.error("Save error:", err);
+            showToast("An unexpected error occurred", "error");
             setSaving(false);
-        } else {
-            showToast("Post updated successfully!");
-            router.push("/admin/dashboard");
-            router.refresh();
         }
     };
 
